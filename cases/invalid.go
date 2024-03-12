@@ -54,7 +54,7 @@ func RunInvalidCases(arg *BidCaseArg) {
 // InvalidBid_OldBlockNumber_20
 // gasFee = 21000 * 20 * 0.0000001 BNB = 0.042 BNB
 func InvalidBid_OldBlockNumber_20(arg *BidCaseArg) error {
-	txs := generateBNBTxs(arg, TransferAmountPerTx, 20)
+	txs := GenerateBNBTxs(arg, TransferAmountPerTx, 20)
 	gasUsed := BNBGasUsed * 20
 	gasFee := big.NewInt(gasUsed * DefaultBNBGasPrice.Int64())
 	bidArgs := generateValidBid(arg, txs, gasUsed, gasFee, false, nil)
@@ -71,7 +71,7 @@ func InvalidBid_OldBlockNumber_20(arg *BidCaseArg) error {
 // InvalidBid_FutureNumber_20
 // gasFee = 21000 * 20 * 0.0000001 BNB = 0.042 BNB
 func InvalidBid_FutureNumber_20(arg *BidCaseArg) error {
-	txs := generateBNBTxs(arg, TransferAmountPerTx, 20)
+	txs := GenerateBNBTxs(arg, TransferAmountPerTx, 20)
 	gasUsed := BNBGasUsed * 20
 	gasFee := big.NewInt(gasUsed * DefaultBNBGasPrice.Int64())
 	bidArgs := generateValidBid(arg, txs, gasUsed, gasFee, false, nil)
@@ -88,7 +88,7 @@ func InvalidBid_FutureNumber_20(arg *BidCaseArg) error {
 // InvalidBid_NilNumber_20
 // gasFee = 21000 * 20 * 0.0000001 BNB = 0.042 BNB
 func InvalidBid_NilNumber_20(arg *BidCaseArg) error {
-	txs := generateBNBTxs(arg, TransferAmountPerTx, 20)
+	txs := GenerateBNBTxs(arg, TransferAmountPerTx, 20)
 	gasUsed := BNBGasUsed * 20
 	gasFee := big.NewInt(gasUsed * DefaultBNBGasPrice.Int64())
 	bidArgs := generateValidBid(arg, txs, gasUsed, gasFee, false, nil)
@@ -105,7 +105,7 @@ func InvalidBid_NilNumber_20(arg *BidCaseArg) error {
 // InvalidBid_InvalidParentHash_20
 // gasFee = 21000 * 20 * 0.0000001 BNB = 0.042 BNB
 func InvalidBid_InvalidParentHash_20(arg *BidCaseArg) error {
-	txs := generateBNBTxs(arg, TransferAmountPerTx, 20)
+	txs := GenerateBNBTxs(arg, TransferAmountPerTx, 20)
 	gasUsed := BNBGasUsed * 20
 	gasFee := big.NewInt(gasUsed * DefaultBNBGasPrice.Int64())
 	bidArgs := generateValidBid(arg, txs, gasUsed, gasFee, false, nil)
@@ -187,7 +187,7 @@ func InvalidBid_FailedTx_20(arg *BidCaseArg) error {
 // InvalidBid_GasExceed_10000
 // gasFee = 21000 * 10000 * 0.0000001 BNB = 0.042*500 BNB
 func InvalidBid_GasExceed_10000(arg *BidCaseArg) error {
-	txs := generateBNBTxs(arg, TransferAmountPerTx, 10000)
+	txs := GenerateBNBTxs(arg, TransferAmountPerTx, 10000)
 	gasUsed := BNBGasUsed * 10000
 	gasFee := big.NewInt(gasUsed * DefaultBNBGasPrice.Int64())
 	bidArgs := generateValidBid(arg, txs, gasUsed, gasFee, false, nil)
@@ -204,7 +204,7 @@ func InvalidBid_GasExceed_10000(arg *BidCaseArg) error {
 //// InvalidBid_LessGasUsed_20
 //// gasFee = 21000 * 20 * 0.0000001 BNB = 0.042 BNB
 //func InvalidBid_LessGasUsed_20(arg *BidCaseArg) error {
-//	txs := generateBNBTxs(arg, TransferAmountPerTx, 20)
+//	txs := GenerateBNBTxs(arg, TransferAmountPerTx, 20)
 //	gasUsed := BNBGasUsed * 10
 //	gasFee := big.NewInt(gasUsed * DefaultBNBGasPrice.Int64())
 //	_ = generateValidBid(arg, txs, gasUsed, gasFee, false, nil)
@@ -217,7 +217,7 @@ func InvalidBid_GasExceed_10000(arg *BidCaseArg) error {
 //// InvalidBid_MoreGasUsed_20
 //// gasFee = 21000 * 20 * 0.0000001 BNB = 0.042 BNB
 //func InvalidBid_MoreGasUsed_20(arg *BidCaseArg) error {
-//	txs := generateBNBTxs(arg, TransferAmountPerTx, 20)
+//	txs := GenerateBNBTxs(arg, TransferAmountPerTx, 20)
 //	gasUsed := BNBGasUsed * 30
 //	gasFee := big.NewInt(gasUsed * DefaultBNBGasPrice.Int64())
 //	_ = generateValidBid(arg, txs, gasUsed, gasFee, false, nil)
@@ -230,7 +230,7 @@ func InvalidBid_GasExceed_10000(arg *BidCaseArg) error {
 // InvalidBid_NilGasUsed_20
 // gasFee = 21000 * 20 * 0.0000001 BNB = 0.042 BNB
 func InvalidBid_NilGasUsed_20(arg *BidCaseArg) error {
-	txs := generateBNBTxs(arg, TransferAmountPerTx, 20)
+	txs := GenerateBNBTxs(arg, TransferAmountPerTx, 20)
 	gasUsed := int64(0)
 	gasFee := big.NewInt(gasUsed * DefaultBNBGasPrice.Int64())
 	bidArgs := generateValidBid(arg, txs, gasUsed, gasFee, false, nil)
@@ -246,7 +246,7 @@ func InvalidBid_NilGasUsed_20(arg *BidCaseArg) error {
 // InvalidBid_LessGasFee_20
 // gasFee = 21000 * 20 * 0.0000001 BNB = 0.042 BNB
 func InvalidBid_LessGasFee_20(arg *BidCaseArg) error {
-	txs := generateBNBTxs(arg, TransferAmountPerTx, 20)
+	txs := GenerateBNBTxs(arg, TransferAmountPerTx, 20)
 	gasUsed := BNBGasUsed * 20
 	gasFee := big.NewInt(gasUsed * big.NewInt(1e9).Int64())
 	bidArgs := generateValidBid(arg, txs, gasUsed, gasFee, false, nil)
@@ -263,7 +263,7 @@ func InvalidBid_LessGasFee_20(arg *BidCaseArg) error {
 // InvalidBid_MoreGasFee_20
 // gasFee = 21000 * 20 * 0.0000001 BNB = 0.042 BNB
 func InvalidBid_MoreGasFee_20(arg *BidCaseArg) error {
-	txs := generateBNBTxs(arg, TransferAmountPerTx, 20)
+	txs := GenerateBNBTxs(arg, TransferAmountPerTx, 20)
 	gasUsed := BNBGasUsed * 20
 	gasFee := big.NewInt(gasUsed * big.NewInt(1e12).Int64())
 	bidArgs := generateValidBid(arg, txs, gasUsed, gasFee, false, nil)
@@ -280,7 +280,7 @@ func InvalidBid_MoreGasFee_20(arg *BidCaseArg) error {
 // InvalidBid_NilGasFee_20
 // gasFee = 21000 * 20 * 0.0000001 BNB = 0.042 BNB
 func InvalidBid_NilGasFee_20(arg *BidCaseArg) error {
-	txs := generateBNBTxs(arg, TransferAmountPerTx, 20)
+	txs := GenerateBNBTxs(arg, TransferAmountPerTx, 20)
 	gasUsed := BNBGasUsed * 20
 	bidArgs := generateValidBid(arg, txs, gasUsed, nil, false, nil)
 
@@ -295,7 +295,7 @@ func InvalidBid_NilGasFee_20(arg *BidCaseArg) error {
 // InvalidBid_EmptyGasFee_20
 // gasFee = 21000 * 20 * 0.0000001 BNB = 0.042 BNB
 func InvalidBid_EmptyGasFee_20(arg *BidCaseArg) error {
-	txs := generateBNBTxs(arg, TransferAmountPerTx, 20)
+	txs := GenerateBNBTxs(arg, TransferAmountPerTx, 20)
 	gasUsed := BNBGasUsed * 20
 	gasFee := big.NewInt(0)
 	bidArgs := generateValidBid(arg, txs, gasUsed, gasFee, false, nil)
@@ -311,7 +311,7 @@ func InvalidBid_EmptyGasFee_20(arg *BidCaseArg) error {
 // InvalidBid_InvalidSignature_20
 // gasFee = 21000 * 20 * 0.0000001 BNB = 0.042 BNB
 func InvalidBid_InvalidSignature_20(arg *BidCaseArg) error {
-	txs := generateBNBTxs(arg, TransferAmountPerTx, 20)
+	txs := GenerateBNBTxs(arg, TransferAmountPerTx, 20)
 	gasUsed := BNBGasUsed * 20
 	gasFee := big.NewInt(gasUsed * DefaultBNBGasPrice.Int64())
 	bidArgs := generateValidBid(arg, txs, gasUsed, gasFee, false, nil)
@@ -329,7 +329,7 @@ func InvalidBid_InvalidSignature_20(arg *BidCaseArg) error {
 // InvalidBid_ExpensiveBuilderFee_20
 // gasFee = 21000 * 20 * 0.0000001 BNB = 0.042 BNB
 func InvalidBid_ExpensiveBuilderFee_20(arg *BidCaseArg) error {
-	txs := generateBNBTxs(arg, TransferAmountPerTx, 20)
+	txs := GenerateBNBTxs(arg, TransferAmountPerTx, 20)
 	gasUsed := BNBGasUsed * 20
 	gasFee := big.NewInt(gasUsed * DefaultBNBGasPrice.Int64())
 	builderFee := big.NewInt(gasUsed*DefaultBNBGasPrice.Int64() + 1)
@@ -347,7 +347,7 @@ func InvalidBid_ExpensiveBuilderFee_20(arg *BidCaseArg) error {
 // InvalidBid_NilPayBidTx_NonNilPayGasUsed_20
 // gasFee = 21000 * 20 * 0.0000001 BNB = 0.042 BNB
 func InvalidBid_NilPayBidTx_NonNilPayGasUsed_20(arg *BidCaseArg) error {
-	txs := generateBNBTxs(arg, TransferAmountPerTx, 20)
+	txs := GenerateBNBTxs(arg, TransferAmountPerTx, 20)
 	gasUsed := BNBGasUsed * 20
 	gasFee := big.NewInt(gasUsed * DefaultBNBGasPrice.Int64())
 	builderFee := big.NewInt(gasUsed * DefaultBNBGasPrice.Int64() / 5)
@@ -367,7 +367,7 @@ func InvalidBid_NilPayBidTx_NonNilPayGasUsed_20(arg *BidCaseArg) error {
 // InvalidBid_NonNilPayBidTx_NilPayGasUsed_20
 // gasFee = 21000 * 20 * 0.0000001 BNB = 0.042 BNB
 func InvalidBid_NonNilPayBidTx_NilPayGasUsed_20(arg *BidCaseArg) error {
-	txs := generateBNBTxs(arg, TransferAmountPerTx, 20)
+	txs := GenerateBNBTxs(arg, TransferAmountPerTx, 20)
 	gasUsed := BNBGasUsed * 20
 	gasFee := big.NewInt(gasUsed * DefaultBNBGasPrice.Int64())
 	builderFee := big.NewInt(gasUsed * DefaultBNBGasPrice.Int64() / 5)

@@ -83,7 +83,7 @@ func RunConcurrency(arg *BidCaseArg) {
 
 func geBidArgs(arg *BidCaseArg, txCount int, chainID *big.Int, block *types.Block) (
 	*types.BidArgs, types.Transactions) {
-	txs := generateBNBTxs(arg, TransferAmountPerTx, txCount)
+	txs := GenerateBNBTxs(arg, TransferAmountPerTx, txCount)
 	gasUsed := BNBGasUsed * int64(txCount)
 	gasFee := big.NewInt(gasUsed * DefaultBNBGasPrice.Int64())
 	bidArgs := geValidBidWithBlock(arg, txs, gasUsed, gasFee, false, nil, chainID, block)

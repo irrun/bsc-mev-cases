@@ -17,7 +17,7 @@ import (
 var (
 	chainURL = flag.String("chain", "http://127.0.0.1:8545", "chain rpc url")
 
-	// setting: root bnb boss, bob abc boss
+	// setting: root bnb&abc boss
 	rootPrivateKey = flag.String("rootpk",
 		"59ba8068eb256d520179e903f43dacf6d8d57d72bd306e1bd603fdb8c8da10e8",
 		"private key of root account")

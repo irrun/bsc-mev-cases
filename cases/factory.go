@@ -119,7 +119,7 @@ func (b *BidFactory) BundleABC(amount *big.Int, bundleSize int) (types.Transacti
 	return txs, nil
 }
 
-func generateBNBTxs(arg *BidCaseArg, amountPerTx *big.Int, txcount int) types.Transactions {
+func GenerateBNBTxs(arg *BidCaseArg, amountPerTx *big.Int, txcount int) types.Transactions {
 	bundleFactory := NewBidFactory(arg.Ctx, arg.Client, arg.RootPk, arg.BobPk, arg.Abc)
 
 	txs := make([]*types.Transaction, 0)
