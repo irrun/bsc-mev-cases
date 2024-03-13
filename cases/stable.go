@@ -37,7 +37,7 @@ func runStableCases(arg *BidCaseArg) {
 		waitForInTurn(arg)
 		err := c(arg)
 		if err != nil {
-			println("stable case failed, ", "case ", n, " err ", err)
+			println("stable case failed, ", "case ", n, " err ", err.Error())
 		} else {
 			println("stable case succeed, ", "case ", n)
 		}
