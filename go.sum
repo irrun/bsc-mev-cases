@@ -938,8 +938,8 @@ github.com/blang/semver v3.5.1+incompatible/go.mod h1:kRBLl5iJ+tD4TcOOxsy/0fnweb
 github.com/blang/semver/v4 v4.0.0/go.mod h1:IbckMUScFkM3pff0VJDNKRiT6TG/YpiHIM2yvyW5YoQ=
 github.com/blizzy78/varnamelen v0.8.0/go.mod h1:V9TzQZ4fLJ1DSrjVDfl89H7aMnTvKkApdHeyESmyR7k=
 github.com/bmizerany/assert v0.0.0-20160611221934-b7ed37b82869/go.mod h1:Ekp36dRnpXw/yCqJaO+ZrUyxD+3VXMFFr56k5XYrpB4=
-github.com/bnb-chain/bsc-builder v0.0.0-20240312095416-05fae7f932f8 h1:bHZTLb8A/NYgyJhmaDN0BUTF4z6VjfNGpGyblS8FKNk=
-github.com/bnb-chain/bsc-builder v0.0.0-20240312095416-05fae7f932f8/go.mod h1:r9/LuIlntgKKPG0ztTHdX2Env53Vci323MQivBOSR3Q=
+github.com/bnb-chain/bsc-builder v0.0.0-20240312110337-641ddcddcc15 h1:+3mI3Xj7mESzV3f363Ilxe77p8emfpmTzCaJZkL8beo=
+github.com/bnb-chain/bsc-builder v0.0.0-20240312110337-641ddcddcc15/go.mod h1:r9/LuIlntgKKPG0ztTHdX2Env53Vci323MQivBOSR3Q=
 github.com/bnb-chain/fastssz v0.1.2/go.mod h1:KcabV+OEw2QwgyY8Fc88ZG79CKYkFdu0kKWyfA3dI6o=
 github.com/bnb-chain/greenfield-tendermint v0.0.0-20230417032003-4cda1f296fb2 h1:jubavYCs/mCFj/g6Utl+l4SfpykdBdWJFPsvb9FcEXU=
 github.com/bnb-chain/greenfield-tendermint v0.0.0-20230417032003-4cda1f296fb2/go.mod h1:9q11eHNRY9FDwFH+4pompzPNGv//Z3VcfvkELaHJPMs=
