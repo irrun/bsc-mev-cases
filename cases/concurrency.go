@@ -13,6 +13,24 @@ import (
 )
 
 func RunConcurrency(arg *BidCaseArg) {
+	ticker := time.NewTicker(500 * time.Millisecond)
+	defer ticker.Stop()
+	counter := 0
+
+	for {
+		select {
+		case <-ticker.C:
+			runConcurrency(arg)
+			counter++
+			if counter > 120 {
+				fmt.Println("concurrency success")
+				return
+			}
+		}
+	}
+}
+
+func runConcurrency(arg *BidCaseArg) {
 	txCounts := []int{8, 32, 512}
 	bidArgs := make([]*types.BidArgs, len(txCounts))
 	txs := make([]types.Transactions, len(txCounts))
@@ -77,8 +95,6 @@ func RunConcurrency(arg *BidCaseArg) {
 			println("concurrency failed ", receipt.Status)
 		}
 	}
-
-	fmt.Println("concurrency success")
 }
 
 func geBidArgs(arg *BidCaseArg, txCount int, chainID *big.Int, block *types.Block) (
