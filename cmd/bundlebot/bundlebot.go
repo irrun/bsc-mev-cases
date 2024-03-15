@@ -48,7 +48,7 @@ func main() {
 		BobPk:  bobPk,
 	}
 
-	txs := cases.GenerateBNBTxs(arg, cases.TransferAmountPerTx, 100)
+	txs := cases.GenerateBNBTxsWithHighGas(arg, cases.TransferAmountPerTx, 20)
 
 	txBytes := make([]hexutil.Bytes, 0, len(txs))
 	for _, tx := range txs {

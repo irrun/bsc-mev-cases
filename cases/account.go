@@ -19,6 +19,7 @@ import (
 var (
 	DefaultGasLimit    = uint64(5000000)
 	DefaultBNBGasPrice = big.NewInt(1e11) // 0.0000001 BNB
+	HighGasPrice       = big.NewInt(1e12) // 0.001 BNB
 	DefaultABCGasPrice = big.NewInt(1e11) // 0.0000001 ABC
 )
 
@@ -52,6 +53,25 @@ func (a *Account) TransferBNB(nonce uint64, toAddress common.Address, chainID *b
 		Value:    amount,
 		Gas:      DefaultGasLimit,
 		GasPrice: DefaultBNBGasPrice,
+		Data:     nil,
+	})
+
+	signedTx, err := types.SignTx(tx, types.LatestSignerForChainID(chainID), a.privateKey)
+	if err != nil {
+		log.Errorw("failed to sign tx", "err", err)
+		return nil, err
+	}
+
+	return signedTx, nil
+}
+
+func (a *Account) TransferBNBWithHighGas(nonce uint64, toAddress common.Address, chainID *big.Int, amount *big.Int) (*types.Transaction, error) {
+	tx := types.NewTx(&types.LegacyTx{
+		Nonce:    nonce,
+		To:       &toAddress,
+		Value:    amount,
+		Gas:      DefaultGasLimit,
+		GasPrice: HighGasPrice,
 		Data:     nil,
 	})
 

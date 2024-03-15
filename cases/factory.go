@@ -84,6 +84,25 @@ func (b *BidFactory) BundleBNB(amount *big.Int, bundleSize int) ([]*types.Transa
 	return txs, nil
 }
 
+func (b *BidFactory) BundleBNBWithHighGas(amount *big.Int, bundleSize int) ([]*types.Transaction, error) {
+	from := b.root
+	to := b.bob
+
+	txs := make([]*types.Transaction, 0)
+	for i := 0; i < bundleSize; i++ {
+		tx, err := from.TransferBNBWithHighGas(from.Nonce, to.Address, b.chainID, amount)
+		if err != nil {
+			log.Errorw("failed to create BNB transfer tx", "err", err)
+			return nil, err
+		}
+
+		txs = append(txs, tx)
+		from.Nonce++
+	}
+
+	return txs, nil
+}
+
 func (b *BidFactory) BundleBNBNoSign(from, to *Account, amount *big.Int, bundleSize int) ([]*types.Transaction, error) {
 	txs := make([]*types.Transaction, 0)
 	for i := 0; i < bundleSize; i++ {
@@ -125,6 +144,20 @@ func GenerateBNBTxs(arg *BidCaseArg, amountPerTx *big.Int, txcount int) types.Tr
 	txs := make([]*types.Transaction, 0)
 
 	bundle, err := bundleFactory.BundleBNB(amountPerTx, txcount)
+	if err != nil {
+		log.Errorw("bundleFactory.BundleBNB", "err", err)
+	}
+	txs = append(txs, bundle...)
+
+	return txs
+}
+
+func GenerateBNBTxsWithHighGas(arg *BidCaseArg, amountPerTx *big.Int, txcount int) types.Transactions {
+	bundleFactory := NewBidFactory(arg.Ctx, arg.Client, arg.RootPk, arg.BobPk, arg.Abc)
+
+	txs := make([]*types.Transaction, 0)
+
+	bundle, err := bundleFactory.BundleBNBWithHighGas(amountPerTx, txcount)
 	if err != nil {
 		log.Errorw("bundleFactory.BundleBNB", "err", err)
 	}
