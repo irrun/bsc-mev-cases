@@ -19,7 +19,7 @@ import (
 var (
 	DefaultGasLimit    = uint64(5000000)
 	DefaultBNBGasPrice = big.NewInt(1e11) // 0.0000001 BNB
-	HighGasPrice       = big.NewInt(1e11) // 0.001 BNB
+	HighGasPrice       = big.NewInt(1e12) // 0.001 BNB
 	DefaultABCGasPrice = big.NewInt(1e11) // 0.0000001 ABC
 )
 
