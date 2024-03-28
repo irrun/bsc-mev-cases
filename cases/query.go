@@ -16,7 +16,7 @@ var fullNode *ethclient.Client
 
 func init() {
 	var err error
-	fullNode, err = ethclient.Dial("http://localhost:8545")
+	fullNode, err = ethclient.Dial("https://bsc-testnet-builder.bnbchain.org")
 	if err != nil {
 		panic(err)
 	}
