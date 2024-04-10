@@ -16,7 +16,7 @@ var (
 	BNBGasUsed          = int64(21000)
 	ABCGasUsed          = int64(21620)
 	PayBidGasUsed       = int64(25000)
-	BuilderFee          = big.NewInt(1e14 * 5)
+	BuilderFee          = big.NewInt(0)
 	TransferAmountPerTx = big.NewInt(1e16)
 )
 

@@ -14,6 +14,7 @@ import (
 )
 
 var invalidBidCases = map[string]BidCaseFn{
+	"InvalidBid_NilPayBidTx_200":                 InvalidBid_NilPayBidTx_200,
 	"InvalidBid_OldBlockNumber_20":               InvalidBid_OldBlockNumber_20,
 	"InvalidBid_FutureNumber_20":                 InvalidBid_FutureNumber_20,
 	"InvalidBid_NilNumber_20":                    InvalidBid_NilNumber_20,
@@ -49,6 +50,22 @@ func RunInvalidCases(arg *BidCaseArg) {
 		}
 		println()
 	}
+}
+
+// InvalidBid_NilPayBidTx_200
+// gasFee = 21000 * 200 * 0.0000001 BNB = 0.42 BNB
+func InvalidBid_NilPayBidTx_200(arg *BidCaseArg) error {
+	txs := GenerateBNBTxs(arg, TransferAmountPerTx, 200)
+	gasUsed := BNBGasUsed * 200
+	gasFee := big.NewInt(gasUsed * DefaultBNBGasPrice.Int64())
+	bidArgs := generateValidBid(arg, txs, gasUsed, gasFee, false, nil)
+
+	retry, err := assertInvalidBidParam(arg.Ctx, arg.Client, bidArgs)
+	for retry {
+		bidArgs = generateValidBid(arg, txs, gasUsed, gasFee, false, nil)
+		retry, err = assertInvalidBidParam(arg.Ctx, arg.Client, bidArgs)
+	}
+	return err
 }
 
 // InvalidBid_OldBlockNumber_20
@@ -392,6 +409,23 @@ func generateBNBTxsNoSign(arg *BidCaseArg, amountPerTx *big.Int, txcount int) ty
 	txs := make([]*types.Transaction, 0)
 
 	bundle, err := bundleFactory.BundleBNBNoSign(root, bob, amountPerTx, txcount)
+	if err != nil {
+		log.Errorw("bundleFactory.BundleBNB", "err", err)
+	}
+	txs = append(txs, bundle...)
+
+	return txs
+}
+
+func generateBNBFailedTxs(arg *BidCaseArg, txcount int) types.Transactions {
+	bundleFactory := NewBidFactory(arg.Ctx, arg.Client, arg.RootPk, arg.BobPk, arg.Abc)
+	root := bundleFactory.Root()
+	balance := root.BalanceBNB(arg.Client)
+	balance.Add(balance, TransferAmountPerTx)
+
+	txs := make([]*types.Transaction, 0)
+
+	bundle, err := bundleFactory.BundleBNB(balance, txcount)
 	if err != nil {
 		log.Errorw("bundleFactory.BundleBNB", "err", err)
 	}

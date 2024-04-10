@@ -6,7 +6,6 @@ import (
 
 var (
 	stableCases = map[string]BidCaseFn{
-		"ValidBid_NilPayBidTx_500":     ValidBid_NilPayBidTx_500,
 		"InvalidBid_OldBlockNumber_20": InvalidBid_OldBlockNumber_20,
 		"InvalidBid_IllegalTxs_20":     InvalidBid_IllegalTxs_20,
 		"InvalidBid_GasExceed_10000":   InvalidBid_GasExceed_10000,

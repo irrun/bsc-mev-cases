@@ -15,11 +15,13 @@ import (
 )
 
 var (
-	chainURL = flag.String("chain", "https://bsc-testnet-builder.bnbchain.org", "chain rpc url")
+	chainURL = flag.String("chain", "http://127.0.0.1:8545", "chain rpc url")
 
 	// setting: root bnb&abc boss
+	// root 0x04d63aBCd2b9b1baa327f2Dda0f873F197ccd186
+	// bob 0x88d2eb89e00ca61c225ef673fcbe4f8d1b3ee28f
 	rootPrivateKey = flag.String("rootpk",
-		"ce774277ce6dcfda443be454175c4f28fbfca162530f23f45312a26a222841c8",
+		"59ba8068eb256d520179e903f43dacf6d8d57d72bd306e1bd603fdb8c8da10e8",
 		"private key of root account")
 	bobPrivateKey = flag.String("bobpk",
 		"23ca29fc7e75f2a303428ee2d5526476279cabbf15c9749d1fdb080f6287e06f",

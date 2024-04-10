@@ -16,9 +16,7 @@ import (
 
 var (
 	validBidCases = map[string]BidCaseFn{
-		"ValidBid_NilPayBidTx_200": ValidBid_NilPayBidTx_200,
-		"ValidBid_NilPayBidTx_500": ValidBid_NilPayBidTx_500,
-		"ValidBid_PayBidTx_200":    ValidBid_PayBidTx_200,
+		"ValidBid_PayBidTx_200": ValidBid_PayBidTx_200,
 	}
 )
 
@@ -74,51 +72,21 @@ func getCaseFn(name string) (BidCaseFn, error) {
 	return nil, errors.New("case fn not found")
 }
 
-// ValidBid_NilPayBidTx_1
-// gasFee = 21000 * 1 * 0.0000001 BNB = 0.42/200 BNB
-func ValidBid_NilPayBidTx_1(arg *BidCaseArg) error {
+// ValidBid_PayBidTx_1
+// gasFee = 21000 * 1 * 0.0000001 BNB = 0.0021 BNB
+// builderFee = 0.05 BNB
+func ValidBid_PayBidTx_1(arg *BidCaseArg) error {
 	txs := GenerateBNBTxs(arg, TransferAmountPerTx, 1)
 	gasUsed := BNBGasUsed * 1
 	gasFee := big.NewInt(gasUsed * DefaultBNBGasPrice.Int64())
-	bidArgs := generateValidBid(arg, txs, gasUsed, gasFee, false, nil)
+	bidArgs := generateValidBid(arg, txs, gasUsed, gasFee, true, BuilderFee)
 
 	retry, err := assertTxSucceed(arg.Ctx, arg.Client, bidArgs, txs)
 	for retry {
-		bidArgs = generateValidBid(arg, txs, gasUsed, gasFee, false, nil)
+		bidArgs = generateValidBid(arg, txs, gasUsed, gasFee, true, BuilderFee)
 		retry, err = assertTxSucceed(arg.Ctx, arg.Client, bidArgs, txs)
 	}
-	return err
-}
 
-// ValidBid_NilPayBidTx_200
-// gasFee = 21000 * 200 * 0.0000001 BNB = 0.42 BNB
-func ValidBid_NilPayBidTx_200(arg *BidCaseArg) error {
-	txs := GenerateBNBTxs(arg, TransferAmountPerTx, 200)
-	gasUsed := BNBGasUsed * 200
-	gasFee := big.NewInt(gasUsed * DefaultBNBGasPrice.Int64())
-	bidArgs := generateValidBid(arg, txs, gasUsed, gasFee, false, nil)
-
-	retry, err := assertTxSucceed(arg.Ctx, arg.Client, bidArgs, txs)
-	for retry {
-		bidArgs = generateValidBid(arg, txs, gasUsed, gasFee, false, nil)
-		retry, err = assertTxSucceed(arg.Ctx, arg.Client, bidArgs, txs)
-	}
-	return err
-}
-
-// ValidBid_NilPayBidTx_500
-// gasFee = 21000 * 500 * 0.0000001 BNB = 1.05 BNB
-func ValidBid_NilPayBidTx_500(arg *BidCaseArg) error {
-	txs := GenerateBNBTxs(arg, TransferAmountPerTx, 500)
-	gasUsed := BNBGasUsed * 500
-	gasFee := big.NewInt(gasUsed * DefaultBNBGasPrice.Int64())
-
-	bidArgs := generateValidBid(arg, txs, gasUsed, gasFee, false, nil)
-	retry, err := assertTxSucceed(arg.Ctx, arg.Client, bidArgs, txs)
-	for retry {
-		bidArgs = generateValidBid(arg, txs, gasUsed, gasFee, false, nil)
-		retry, err = assertTxSucceed(arg.Ctx, arg.Client, bidArgs, txs)
-	}
 	return err
 }
 
@@ -138,23 +106,6 @@ func ValidBid_PayBidTx_200(arg *BidCaseArg) error {
 	}
 
 	return err
-}
-
-func generateBNBFailedTxs(arg *BidCaseArg, txcount int) types.Transactions {
-	bundleFactory := NewBidFactory(arg.Ctx, arg.Client, arg.RootPk, arg.BobPk, arg.Abc)
-	root := bundleFactory.Root()
-	balance := root.BalanceBNB(arg.Client)
-	balance.Add(balance, TransferAmountPerTx)
-
-	txs := make([]*types.Transaction, 0)
-
-	bundle, err := bundleFactory.BundleBNB(balance, txcount)
-	if err != nil {
-		log.Errorw("bundleFactory.BundleBNB", "err", err)
-	}
-	txs = append(txs, bundle...)
-
-	return txs
 }
 
 func assertTxSucceed(ctx context.Context, client *ethclient.Client, bidArgs *types.BidArgs, txs types.Transactions) (
@@ -177,12 +128,14 @@ func assertTxSucceed(ctx context.Context, client *ethclient.Client, bidArgs *typ
 	time.Sleep(5 * time.Second)
 
 	for i, tx := range txs {
-		receipt, err := fullNode.TransactionReceipt(ctx, tx.Hash())
+		receipt, err := client.TransactionReceipt(ctx, tx.Hash())
 		if err != nil {
+			log.Errorw("receipt err", "err", err)
 			return false, fmt.Errorf("receipt err, %v", err)
 		}
 
 		if receipt.Status != 1 {
+			log.Errorw("tx failed", "tx", tx.Hash().Hex())
 			return false, fmt.Errorf("tx at index %v failed, %v", i, err)
 		}
 	}
