@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"flag"
+	"time"
 
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/core/types"
@@ -15,16 +16,16 @@ import (
 )
 
 var (
-	chainURL = flag.String("chain", "http://127.0.0.1:8545", "chain rpc url")
+	chainURL = flag.String("chain", "https://bsc-testnet-builder.bnbchain.org/", "chain rpc url")
 
 	// setting: root bnb&abc boss
 	// root 0x04d63aBCd2b9b1baa327f2Dda0f873F197ccd186
 	// bob 0x88d2eb89e00ca61c225ef673fcbe4f8d1b3ee28f
 	rootPrivateKey = flag.String("rootpk",
-		"59ba8068eb256d520179e903f43dacf6d8d57d72bd306e1bd603fdb8c8da10e8",
+		"69c620c47a6c561c6f5e5b2496e477b626144e5b9c7257602fdeca670059f929",
 		"private key of root account")
 	bobPrivateKey = flag.String("bobpk",
-		"23ca29fc7e75f2a303428ee2d5526476279cabbf15c9749d1fdb080f6287e06f",
+		"69c620c47a6c561c6f5e5b2496e477b626144e5b9c7257602fdeca670059f929",
 		"private key of bob account")
 )
 
@@ -49,27 +50,31 @@ func main() {
 		BobPk:  bobPk,
 	}
 
-	txs := cases.GenerateBNBTxsWithHighGas(arg, cases.TransferAmountPerTx, 1)
+	for i := 0; i < 72; i++ {
+		txs := cases.GenerateBNBTxsWithHighGas(arg, cases.TransferAmountPerTx, 1)
 
-	txBytes := make([]hexutil.Bytes, 0, len(txs))
-	for _, tx := range txs {
-		txByte, err := tx.MarshalBinary()
-		if err != nil {
-			log.Panicw("failed to marshal tx", "err", err)
+		txBytes := make([]hexutil.Bytes, 0, len(txs))
+		for _, tx := range txs {
+			txByte, err := tx.MarshalBinary()
+			if err != nil {
+				log.Panicw("failed to marshal tx", "err", err)
+			}
+			txBytes = append(txBytes, txByte)
 		}
-		txBytes = append(txBytes, txByte)
-	}
 
-	bundleArgs := &types.SendBundleArgs{
-		Txs: txBytes,
-	}
+		bundleArgs := &types.SendBundleArgs{
+			Txs: txBytes,
+		}
 
-	err = client.SendBundle(ctx, bundleArgs)
-	if err != nil {
-		log.Panicw("failed to send bundle", "err", err)
-	}
+		err = client.SendBundle(ctx, bundleArgs)
+		if err != nil {
+			log.Panicw("failed to send bundle", "err", err)
+		}
 
-	for _, tx := range txs {
-		log.Infow("hash", "v", tx.Hash())
+		for _, tx := range txs {
+			log.Infow("hash", "v", tx.Hash())
+		}
+
+		time.Sleep(1 * time.Hour)
 	}
 }

@@ -5,11 +5,18 @@ mod:
 	go mod tidy
 
 bidbot:
-	go build -o bidbot ./cmd/bidbot
+	mkdir -p .build
+	go build -o .build/bidbot ./cmd/bidbot
 
 sol:
-	go build -o sol ./cmd/sol
+	mkdir -p .build
+	go build -o .build/sol ./cmd/sol
+
+bundlebot:
+	mkdir -p .build
+	go build -o .build/bundlebot ./cmd/bundlebot
 
 all:
-	go build -o bidbot ./cmd/bidbot
-	go build -o sol ./cmd/sol
+	mkdir -p .build
+	go build -o .build/bidbot ./cmd/bidbot
+	go build -o .build/sol ./cmd/sol
