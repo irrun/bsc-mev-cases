@@ -75,6 +75,6 @@ func main() {
 			log.Infow("hash", "v", tx.Hash())
 		}
 
-		time.Sleep(1 * time.Hour)
+		time.Sleep(1 * time.Minute)
 	}
 }
