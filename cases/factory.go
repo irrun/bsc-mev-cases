@@ -17,7 +17,7 @@ var (
 	ABCGasUsed          = int64(21620)
 	PayBidGasUsed       = int64(25000)
 	BuilderFee          = big.NewInt(1e14 * 5)
-	TransferAmountPerTx = big.NewInt(1e16)
+	TransferAmountPerTx = big.NewInt(0)
 )
 
 type BidFactory struct {
@@ -33,7 +33,7 @@ type BidFactory struct {
 func NewBidFactory(
 	ctx context.Context,
 	client *ethclient.Client,
-	rootPk, bobPk string,
+	rootPk, RootPk string,
 	abcSol *abc.Abc,
 ) *BidFactory {
 	chainID, err := fullNode.ChainID(ctx)
@@ -42,7 +42,7 @@ func NewBidFactory(
 	}
 
 	root := NewAccount(rootPk, abcSol)
-	bob := NewAccount(bobPk, abcSol)
+	bob := NewAccount(RootPk, abcSol)
 
 	return &BidFactory{
 		ctx:     ctx,
@@ -139,7 +139,7 @@ func (b *BidFactory) BundleABC(amount *big.Int, bundleSize int) (types.Transacti
 }
 
 func GenerateBNBTxs(arg *BidCaseArg, amountPerTx *big.Int, txcount int) types.Transactions {
-	bundleFactory := NewBidFactory(arg.Ctx, arg.Client, arg.RootPk, arg.BobPk, arg.Abc)
+	bundleFactory := NewBidFactory(arg.Ctx, arg.Client, arg.RootPk, arg.RootPk, arg.Abc)
 
 	txs := make([]*types.Transaction, 0)
 
@@ -153,7 +153,7 @@ func GenerateBNBTxs(arg *BidCaseArg, amountPerTx *big.Int, txcount int) types.Tr
 }
 
 func GenerateBNBTxsWithHighGas(arg *BidCaseArg, amountPerTx *big.Int, txcount int) types.Transactions {
-	bundleFactory := NewBidFactory(arg.Ctx, arg.Client, arg.RootPk, arg.BobPk, arg.Abc)
+	bundleFactory := NewBidFactory(arg.Ctx, arg.Client, arg.RootPk, arg.RootPk, arg.Abc)
 
 	txs := make([]*types.Transaction, 0)
 
@@ -167,7 +167,7 @@ func GenerateBNBTxsWithHighGas(arg *BidCaseArg, amountPerTx *big.Int, txcount in
 }
 
 func generateABCTxs(arg *BidCaseArg, amountPerTx *big.Int, txcount int) types.Transactions {
-	bundleFactory := NewBidFactory(arg.Ctx, arg.Client, arg.RootPk, arg.BobPk, arg.Abc)
+	bundleFactory := NewBidFactory(arg.Ctx, arg.Client, arg.RootPk, arg.RootPk, arg.Abc)
 
 	txs := make([]*types.Transaction, 0)
 

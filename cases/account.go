@@ -18,6 +18,7 @@ import (
 
 var (
 	DefaultGasLimit    = uint64(5000000)
+	GWEI               = big.NewInt(1e9)
 	DefaultBNBGasPrice = big.NewInt(1e11) // 0.0000001 BNB
 	HighGasPrice       = big.NewInt(1e12) // 0.001 BNB
 	DefaultABCGasPrice = big.NewInt(1e11) // 0.0000001 ABC
@@ -52,7 +53,7 @@ func (a *Account) TransferBNB(nonce uint64, toAddress common.Address, chainID *b
 		To:       &toAddress,
 		Value:    amount,
 		Gas:      DefaultGasLimit,
-		GasPrice: DefaultBNBGasPrice,
+		GasPrice: GWEI,
 		Data:     nil,
 	})
 
@@ -185,12 +186,12 @@ func PriKeyToAddress(privateKey string) (*ecdsa.PrivateKey, common.Address) {
 }
 
 type BidCaseArg struct {
-	Ctx           context.Context
-	Client        *ethclient.Client
-	RootPk, BobPk string
-	Abc           *abc.Abc
-	Builder       *Account
-	Validators    []common.Address
+	Ctx        context.Context
+	Client     *ethclient.Client
+	RootPk     string
+	Abc        *abc.Abc
+	Builder    *Account
+	Validators []common.Address
 }
 
 type BidCaseFn func(arg *BidCaseArg) error

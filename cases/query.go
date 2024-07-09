@@ -16,7 +16,7 @@ var fullNode *ethclient.Client
 
 func init() {
 	var err error
-	fullNode, err = ethclient.Dial("http://localhost:8545")
+	fullNode, err = ethclient.Dial("http://10.213.21.16:8545")
 	if err != nil {
 		panic(err)
 	}
