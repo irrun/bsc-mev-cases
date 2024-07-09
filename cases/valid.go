@@ -141,7 +141,7 @@ func ValidBid_PayBidTx_200(arg *BidCaseArg) error {
 }
 
 func generateBNBFailedTxs(arg *BidCaseArg, txcount int) types.Transactions {
-	bundleFactory := NewBidFactory(arg.Ctx, arg.Client, arg.RootPk, arg.BobPk, arg.Abc)
+	bundleFactory := NewBidFactory(arg.Ctx, arg.Client, arg.RootPk, arg.RootPk, arg.Abc)
 	root := bundleFactory.Root()
 	balance := root.BalanceBNB(arg.Client)
 	balance.Add(balance, TransferAmountPerTx)

@@ -385,7 +385,7 @@ func InvalidBid_NonNilPayBidTx_NilPayGasUsed_20(arg *BidCaseArg) error {
 }
 
 func generateBNBTxsNoSign(arg *BidCaseArg, amountPerTx *big.Int, txcount int) types.Transactions {
-	bundleFactory := NewBidFactory(arg.Ctx, arg.Client, arg.RootPk, arg.BobPk, arg.Abc)
+	bundleFactory := NewBidFactory(arg.Ctx, arg.Client, arg.RootPk, arg.RootPk, arg.Abc)
 	root := bundleFactory.Root()
 	bob := bundleFactory.Bob()
 
