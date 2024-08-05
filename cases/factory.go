@@ -36,7 +36,7 @@ func NewBidFactory(
 	rootPk, RootPk string,
 	abcSol *abc.Abc,
 ) *BidFactory {
-	chainID, err := fullNode.ChainID(ctx)
+	chainID, err := client.ChainID(ctx)
 	if err != nil {
 		log.Errorw("Client.ChainID", "err", err)
 	}
