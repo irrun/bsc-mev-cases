@@ -43,7 +43,6 @@ func main() {
 	ctx := context.Background()
 
 	rootPk := *rootPrivateKey
-	bobPk := *bobPrivateKey
 	builderPk := *builderPrivateKey
 	url := *chainURL
 	whatcase := *casetype
@@ -62,9 +61,8 @@ func main() {
 		Ctx:        ctx,
 		Client:     client,
 		RootPk:     rootPk,
-		BobPk:      bobPk,
 		Abc:        abcSol,
-		Builder:    cases.NewAccount(builderPk, abcSol),
+		Builder:    cases.NewAccount(client, builderPk, abcSol),
 		Validators: []common.Address{common.HexToAddress(*validator)},
 	}
 

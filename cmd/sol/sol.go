@@ -63,8 +63,8 @@ func transfer(ctx context.Context, client *ethclient.Client, abc *abc.Abc) {
 		log.Panic("Client.ChainID", "err", err)
 	}
 
-	root := cases.NewAccount(*rootPrivateKey, abc)
-	builder := cases.NewAccount(*builderPrivateKey, abc)
+	root := cases.NewAccount(client, *rootPrivateKey, abc)
+	builder := cases.NewAccount(client, *builderPrivateKey, abc)
 
 	tx, err := root.TransferABC(root.Nonce, builder.Address, chainID, big.NewInt(1e18))
 	if err != nil {

@@ -41,8 +41,8 @@ func NewBidFactory(
 		log.Errorw("Client.ChainID", "err", err)
 	}
 
-	root := NewAccount(rootPk, abcSol)
-	bob := NewAccount(RootPk, abcSol)
+	root := NewAccount(client, rootPk, abcSol)
+	bob := NewAccount(client, RootPk, abcSol)
 
 	return &BidFactory{
 		ctx:     ctx,

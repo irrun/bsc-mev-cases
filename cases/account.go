@@ -31,10 +31,10 @@ type Account struct {
 	abc        *abc.Abc
 }
 
-func NewAccount(privateKey string, abc *abc.Abc) *Account {
+func NewAccount(client *ethclient.Client, privateKey string, abc *abc.Abc) *Account {
 	privateECDSAKey, address := PriKeyToAddress(privateKey)
 
-	nonce, err := fullNode.PendingNonceAt(context.TODO(), address)
+	nonce, err := client.PendingNonceAt(context.TODO(), address)
 	if err != nil {
 		log.Errorw("failed to get pending Nonce", "err", err)
 	}
